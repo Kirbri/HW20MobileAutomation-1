@@ -14,14 +14,16 @@ import static owner.config.DeviceProvider.DEVICE_CONFIG;
 
 public class BrowserstackDriver implements WebDriverProvider {
 
+    @Nonnull
     @Override
-    public WebDriver createDriver( Capabilities capabilities) {
+    public WebDriver createDriver(@Nonnull Capabilities capabilities) {
         if (DEVICE_CONFIG.getPlatformName().equals("android")) {
             return getAndroidDriver();
         } else if (DEVICE_CONFIG.getPlatformName().equals("ios")) {
             return getIosDriver();
+        } else {
+            throw new IllegalArgumentException("Unknown state: support only Android or iOS.");
         }
-        return null;
     }
 
     private DesiredCapabilities commonCapabilities() {
